@@ -6,8 +6,8 @@ from os import environ as env
 from pathlib import Path
 
 # load environment variables
-#env_path = Path('/home/dkobrin.helioho.st/flask.dkobrin.helioho.st/Flask_Deploy_test')/'.env'
-env_path = Path('.')/'.env'
+env_path = Path('/home/dkobrin.helioho.st/flask.dkobrin.helioho.st/FlaskDeploytest')/'.env'
+#env_path = Path('.')/'.env'
 load_dotenv(dotenv_path=env_path)
 ORIGINS = env.get('ORIGINS')
 PORT = env.get('PORT', 5000)
