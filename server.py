@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
 from flask_talisman import Talisman
@@ -7,7 +7,7 @@ from pathlib import Path
 
 # load environment variables
 env_path = Path('/home/dkobrin.helioho.st/flask.dkobrin.helioho.st/FlaskDeploytest')/'.env'
-#env_path = Path('.')/'.env'
+# env_path = Path('.')/'.env'
 load_dotenv(dotenv_path=env_path)
 ORIGINS = env.get('ORIGINS')
 PORT = env.get('PORT', 5000)
@@ -41,6 +41,7 @@ def after_request(response):
     response.headers['Pragma'] = 'no-chache'
     response.headers['Expires'] = '0'
     response.headers['Content-Type'] = 'application/json; charset=utf-8'
+    response.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
     return response
 
 # CORS policy
