@@ -40,7 +40,7 @@ def after_request(response):
     # response.headers['Cache-Control'] = 'no-store, max-age=0'
     # response.headers['Pragma'] = 'no-chache'
     # response.headers['Expires'] = '0'
-    # response.headers['Content-Type'] = 'application/json; charset=utf-8'
+    response.headers['Content-Type'] = 'application/json; charset=utf-8'
     # response.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
     print('After Request - Setting response headers - close database')
     return response
