@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
-from flask_talisman import Talisman
+# from flask_talisman import Talisman
 from os import environ as env
 from pathlib import Path
 
@@ -17,16 +17,16 @@ DEBUG = FLASK_ENV == 'development'
 app = Flask(__name__)
 
 # HTTP security headers
-csp = {
-    'default-src': ['\'self\''],
-    'frame-ancestors': ['\'none\'']
-}
+# csp = {
+#     'default-src': ['\'self\''],
+#     'frame-ancestors': ['\'none\'']
+# }
 
-Talisman(app,
-         frame_options='DENY',
-         content_security_policy=csp,
-         referrer_policy='no-referrer'
-         )
+# Talisman(app,
+#          frame_options='DENY',
+#          content_security_policy=csp,
+#          referrer_policy='no-referrer'
+#          )
 
 # Code run before each request - good to open database connection
 @app.before_request
@@ -36,20 +36,21 @@ def before_request():
 # Code to run after request - set response headers and close database connection
 @app.after_request
 def after_request(response):
-    response.headers['X-XSS-Protection'] = '0'
-    response.headers['Cache-Control'] = 'no-store, max-age=0'
-    response.headers['Pragma'] = 'no-chache'
-    response.headers['Expires'] = '0'
-    response.headers['Content-Type'] = 'application/json; charset=utf-8'
-    response.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
+    # response.headers['X-XSS-Protection'] = '0'
+    # response.headers['Cache-Control'] = 'no-store, max-age=0'
+    # response.headers['Pragma'] = 'no-chache'
+    # response.headers['Expires'] = '0'
+    # response.headers['Content-Type'] = 'application/json; charset=utf-8'
+    # response.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
+    print('After Request - Setting response headers - close database')
     return response
 
 # CORS policy
 CORS(app,
      resources={'/*': {'origins':ORIGINS}},
-     allow_headers=['Authorization', 'Content-Type'],
+     allow_headers=['Content-Type'], # ['Authorization', 'Content-Type'],
      methods=['GET', 'POST', 'PUT', 'DELETE'],
-     supports_credentials=True,
+    #  supports_credentials=True,
      max_age=86400
      )
 
