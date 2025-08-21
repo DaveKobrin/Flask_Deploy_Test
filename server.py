@@ -1,3 +1,4 @@
+import json
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -5,11 +6,13 @@ from dotenv import load_dotenv
 from os import environ as env
 from pathlib import Path
 
+
 # load environment variables
 env_path = Path('/home/dkobrin.helioho.st/flask.dkobrin.helioho.st/FlaskDeploytest')/'.env'
 # env_path = Path('.')/'.env'
 load_dotenv(dotenv_path=env_path)
-ORIGINS = env.get('ORIGINS')
+ENV_ORIGINS = env.get('ORIGINS')
+ORIGINS = json.loads(ENV_ORIGINS)
 PORT = env.get('PORT', 5000)
 FLASK_ENV = env.get('FLASK_ENV')
 DEBUG = FLASK_ENV == 'development'
@@ -32,6 +35,8 @@ app = Flask(__name__)
 @app.before_request
 def before_request():
     print('Before Request - connect to data')
+    print(ENV_ORIGINS)
+    print(ORIGINS)
 
 # Code to run after request - set response headers and close database connection
 @app.after_request
